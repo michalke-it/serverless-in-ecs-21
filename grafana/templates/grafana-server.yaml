@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana-server
+spec:
+  selector:
+    matchLabels:
+      run: grafana-server
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: grafana-server
+    spec:
+      containers:
+      - name: grafana-dashboard
+        image: grafana/grafana:latest
+        ports:
+        - containerPort: 3000
+        env: 
+        - name: DASHBOARD_PASSWORD
+          value: "password"
+        volumeMounts:
+        - name: grafana-storage
+          mountPath: /var/lib/grafana
+      volumes:
+      - name: grafana-storage
+        hostPath:
+          path: /vagrant/grafana-storage
+      securityContext:
+        runAsNonRoot: false
+        fsGroup: 472

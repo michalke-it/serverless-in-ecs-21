@@ -1,0 +1,11 @@
+service:
+    type: NodePort
+    port: 9200
+    nodePort: 30040
+    protocol: TCP
+
+
+replicas: 2
+
+image: "elasticsearch"
+imageTag: "7.9.3"
